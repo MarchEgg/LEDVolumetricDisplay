@@ -1,29 +1,42 @@
 #include <Arduino.h>
+
+#define FASTLED_FORCE_SOFTWARE_SPI
+
+
 #include <FastLED.h>
 
 
-
-#define NUM_LEDS 10
-#define DATA_PIN 50
+#define NUM_LEDS 35
+#define DATA_PIN 6
 
 CRGB leds[NUM_LEDS];
 
 
 void setup() {
   // put your setup code here, to run once:
-  FastLED.addLeds<WS2812B, DATA_PIN, RGB>(leds, NUM_LEDS);  // GRB ordering is typical
-  FastLED.setBrightness(255);  // Set brightness to 50 out of 255
-
+    FastLED.addLeds<WS2812B, DATA_PIN, GRB>(leds, NUM_LEDS);  // GRB ordering is typical
+    //FastLED.setMaxPowerInVoltsAndMilliamps(5,3000); 
+    FastLED.setBrightness(255);  // Set the brightness to a value between 0 and 255
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  leds[5] = CRGB::Red;
-  leds[6] = CRGB::Green;
-  leds[7] = CRGB::Blue;
-  leds[8] = CRGB::White;
-  leds[9] = CRGB::Yellow;
-  FastLED.show();
-  delay(500);
+  for(int i = 0; i< NUM_LEDS; i++){
+    leds[i] = CRGB::Red;
+    FastLED.show();
+    delay(100);
+    
+  }
+  for(int i = 0; i< NUM_LEDS; i++){
+    leds[i] = CRGB::Black;
+    FastLED.show();
+    delay(100);
+    
+  }
+  
+  // Now turn the LED off, then pause
+
+  
+  
 }
 
