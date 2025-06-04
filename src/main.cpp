@@ -21,14 +21,49 @@ int grid[9][9] = {
   {145, 146, 147, 148, 149, 150, 151, 152, 153} };
 
 
+float points[8][3] = { // Points that will be rendered to the display
+  {2.8, 2.8, 5.6},
+  {-2.8, 2.8, 5.6},
+  {2.8, -2.8, 5.6},
+  {-2.8, -2.8, 5.6},
+  {2.8, 2.8, 0},
+  {-2.8, 2.8, 0},
+  {2.8, -2.8, 0},
+  {-2.8, -2.8, 0} };
+
+float polarPoints[8][3] = { // Dummy values, conversion happens during setup function
+  {2.8, 2.8, 5.6},
+  {-2.8, 2.8, 5.6},
+  {2.8, -2.8, 5.6},
+  {-2.8, -2.8, 5.6},
+  {2.8, 2.8, 0},
+  {-2.8, 2.8, 0},
+  {2.8, -2.8, 0},
+  {-2.8, -2.8, 0}};
+
+
+
+
+
 CRGB leds[NUM_LEDS];
 
 
 void setup() {
   // put your setup code here, to run once:
-    FastLED.addLeds<WS2812B, DATA_PIN, GRB>(leds, NUM_LEDS);  // GRB ordering is typical
-    //FastLED.setMaxPowerInVoltsAndMilliamps(5,3000); 
-    FastLED.setBrightness(100);  // Set the brightness to a value between 0 and 255
+  for (int i = 0; i < 8; i++) {
+    polarPoints[i][0] = sqrt(pow(points[i][0], 2) + pow(points[i][1], 2)); // r
+    
+    float theta = atan2(points[i][1], points[i][0]);
+    if (theta < 0) theta += 2 * PI; // convert to [0, 2π]
+    polarPoints[i][1] = theta;
+
+    polarPoints[i][2] = points[i][2];
+  }
+
+
+  FastLED.addLeds<WS2812B, DATA_PIN, GRB>(leds, NUM_LEDS);  // GRB ordering is typical
+  //FastLED.setMaxPowerInVoltsAndMilliamps(5,3000); 
+  FastLED.setBrightness(100);  // Set the brightness to a value between 0 and 255
 }
 
 void loop() {
