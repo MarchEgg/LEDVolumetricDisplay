@@ -5,6 +5,14 @@
 
 #include <FastLED.h>
 
+#include <Adafruit_DotStar.h>
+#include <SPI.h>
+
+#define NUMPIXELS 64  // 8x8 matrix
+#define DATAPIN   51  // MOSI
+#define CLOCKPIN  52  // SCK
+
+Adafruit_DotStar strip(NUMPIXELS, DATAPIN, CLOCKPIN, DOTSTAR_BRG);
 
 #define NUM_LEDS 160
 #define DATA_PIN 6
