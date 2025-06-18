@@ -6,7 +6,7 @@
 #define DATAPIN   51  // MOSI
 #define CLOCKPIN  52  // SCK
 
-int RPM = 2500;
+int rpm = 60;
 float angle = 0;
 
 Adafruit_DotStar strip(NUMPIXELS, DATAPIN, CLOCKPIN, DOTSTAR_BRG);
@@ -66,7 +66,7 @@ void generateEdgePoints() {
 float polarPoints[NUM_EDGES * NUM_EDGE_POINTS][3];
 
 float getDeltaAngle(unsigned long elapsedMs) {
-  return elapsedMs * (2.0 * PI * RPM / 60000.0);
+  return elapsedMs * (2.0 * PI * rpm / 60000.0);
 }
 
 unsigned long lastUpdate = 0;
@@ -88,6 +88,39 @@ for (int i = 0; i < NUM_EDGES * NUM_EDGE_POINTS; i++) {
 }
 
 void loop() {
+  strip.clear();
+  angle = (rpm/(60.0*1000) * 2 * PI) * millis(); // angle in radians
+  angle = fmod(angle, (2 * PI));
+
+  if(angle > (PI/2) && angle < (3*PI/2)) {
+    for(int i = 0; i <4; i++ ){
+      for(int j = 0; j < 4; j++){
+        strip.setPixelColor(grid[i][j], strip.Color(0, 0, 255));  // Blue
+      }
+    }
+    for(int i = 4; i <8; i++ ){
+      for(int j = 4; j < 8; j++){
+        strip.setPixelColor(grid[i][j], strip.Color(0, 255, 0 ));  // Blue
+      }
+    }
+    
+  }else{
+    for(int i = 0; i <4; i++ ){
+      for(int j = 4; j < 8; j++){
+        strip.setPixelColor(grid[i][j], strip.Color(0, 0, 255));  // Blue
+      }
+    }
+    for(int i = 4; i <8; i++ ){
+      for(int j = 0; j < 4; j++){
+        strip.setPixelColor(grid[i][j], strip.Color(0, 255, 0 ));  // Blue
+      }
+    }
+  }
+  strip.show();
+}
+
+
+  /*
   
   unsigned long now = millis();
   unsigned long delta = now - lastUpdate;
@@ -123,7 +156,7 @@ void loop() {
 
   strip.show();
 
- /*
+ 
 
   uint32_t blue = strip.Color(0, 0, 255);
 
@@ -163,7 +196,7 @@ void loop() {
     } 
   } 
     */
-}
+
 
 
 
