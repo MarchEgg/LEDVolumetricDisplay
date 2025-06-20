@@ -6,7 +6,7 @@
 #define DATAPIN   51  // MOSI
 #define CLOCKPIN  52  // SCK
 
-int rpm = 60;
+int rpm = 650;
 float angle = 0;
 
 Adafruit_DotStar strip(NUMPIXELS, DATAPIN, CLOCKPIN, DOTSTAR_BRG);
