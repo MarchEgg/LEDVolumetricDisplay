@@ -193,6 +193,35 @@ void loop() {
       strip.show();
       delay(50);
       strip.setPixelColor(grid[i][j], 0);  // Off
+      strip.clear();
+  angle = (rpm/(60.0*1000) * 2 * PI) * millis(); // angle in radians
+  angle = fmod(angle, (2 * PI));
+
+  if(angle > (PI/2) && angle < (3*PI/2)) {
+    for(int i = 0; i <4; i++ ){
+      for(int j = 0; j < 4; j++){
+        strip.setPixelColor(grid[i][j], strip.Color(0, 0, 255));  // Blue
+      }
+    }
+    for(int i = 4; i <8; i++ ){
+      for(int j = 4; j < 8; j++){
+        strip.setPixelColor(grid[i][j], strip.Color(0, 255, 0 ));  // Blue
+      }
+    }
+    
+  }else{
+    for(int i = 0; i <4; i++ ){
+      for(int j = 4; j < 8; j++){
+        strip.setPixelColor(grid[i][j], strip.Color(0, 0, 255));  // Blue
+      }
+    }
+    for(int i = 4; i <8; i++ ){
+      for(int j = 0; j < 4; j++){
+        strip.setPixelColor(grid[i][j], strip.Color(0, 255, 0 ));  // Blue
+      }
+    }
+  }
+  strip.show();
     } 
   } 
     */
