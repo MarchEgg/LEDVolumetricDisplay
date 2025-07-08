@@ -19,6 +19,8 @@ int value = 0;
 int oldValue = 0;
 int oldTime = 0;
 int mpr = 0;
+int oldmpr = 0;
+int dTime = 0;
 
 // put function declarations here:
 int grid[8][8] = {
@@ -53,25 +55,31 @@ void loop() {
   if(value != oldValue) // Only print if the value has changed
   {
     if(value == 0){
+      oldmpr = mpr;
       mpr = millis() - oldTime; // Print the value to the Serial Monitor
       oldTime = millis();
     }
   }
+
   //angle += (rpm/(60.0*1000) * 2 * PI) * (millis()-oldTime); // angle in radians
   //oldTime = millis();
   //angle = fmod(angle, (2 * PI));
-  
+  dTime = millis() - oldTime;
+
+  if(mpr > oldmpr*1.5 && oldmpr != 0){
+    mpr = oldmpr;
+  }
+
+  angle = ( dTime / (double)mpr ) * 2.0 * PI;
+
+  angle = fmod(angle, (2 * PI));
   if( digitalRead(D12) == 0){
     angle = 0;
   }
-  if(millis() - oldTime > mpr/2.0){
-    angle = PI;
-  }
+    
+
 
   
-  
-  
-
   if(angle > (PI/2) && angle < (3*PI/2)) {
     for(int i = 0; i <4; i++ ){
       for(int j = 0; j < 4; j++){
@@ -97,6 +105,11 @@ void loop() {
       }
     }
   }
+    
+
+
+
+
   strip.show();
   
 }
